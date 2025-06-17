@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import GuestLayout from '../Layout/GuestLayout'
@@ -15,20 +16,31 @@ import FilmContext from '../Context/FilmContext'
 
 function App() {
 
-
+  const API_KEY = "748a46c34591b7183dcb9350cfbe97fa";
+  
   const [movie, setMovie] = useState([]);
+  const [query, setQuery] = useState("")
+  const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
 
   useEffect(() => {
 
-axios.get().then(res => console.log(res.data.results))
+    axios.get(searchApiUrl).then(res => {
+
+      console.log(res.data.results);
+      setMovie(res.data.results)
+    }
 
 
-  }, [])
+
+    )
+
+
+  }, [query])
 
   return (
 
     <>
-      <FilmContext>
+      <FilmContext.Provider value={{movie, setQuery}}>
 
         <BrowserRouter>
           <GuestLayout />
@@ -43,7 +55,7 @@ axios.get().then(res => console.log(res.data.results))
 
           </Routes>
         </BrowserRouter>
-      </FilmContext>
+      </FilmContext.Provider>
 
     </>
 

@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link, NavLink } from "react-router-dom"
+import FilmContext from "../Context/FilmContext";
 
 export default function Header() {
 
-    const [userSearch, setUserSearch] = useState("");
-    
+    const { setQuery } = useContext(FilmContext)
+    const [userQuery, setUserQuery] = useState("");
+
 
     const navLinks = [
         {
@@ -33,6 +35,15 @@ export default function Header() {
         }
 
     ]
+
+
+    //funzione di ricerca 
+    const search = (e) => {
+
+        e.preventDefault();
+        setQuery(userQuery)
+
+    }
     return (
         <>
 
@@ -63,10 +74,15 @@ export default function Header() {
                             type="text"
                             placeholder="Cerca"
                             aria-label="Cerca"
-                            value={userSearch}
-                            onChange={(e)=> setUserSearch(e.target.value)}>
-                            </input>
-                        <button className="btn btn-outline-danger" type="submit">Search</button>
+                            value={userQuery}
+                            onChange={(e) => setUserQuery(e.target.value)}>
+                        </input>
+                        <button
+                            className="btn btn-outline-danger"
+                            type="submit"
+                            onClick={search}
+                        >Search
+                        </button>
                     </form>
 
                 </div>
