@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import FilmContext from '../Context/FilmContext'
 import Header from '../Components/Header'
 import axios from 'axios'
@@ -6,13 +6,27 @@ import axios from 'axios'
 
 export default function HomePage() {
     const { movie, series } = useContext(FilmContext);
+    const filmCarouselRef = useRef(null);
+    const seriesCarouselRef = useRef(null);
+const scrollLeft = (ref) => {
+  if (ref && ref.current) {
+    ref.current.scrollBy({ left: -300, behavior: "smooth" });
+  }
+};
+
+const scrollRight = (ref) => {
+  if (ref && ref.current) {
+    ref.current.scrollBy({ left: 300, behavior: "smooth" });
+  }
+};
+
 
     const voteRendering = (film) => {
         const toFive = Math.ceil(parseFloat(film.vote_average) / 2);
         const emptyStars = 5 - toFive;
 
-        const voteArr = new Array(toFive).fill(<i class="fa-solid fa-star"></i>)
-        const emptyArr = new Array(emptyStars).fill(<i class="fa-regular fa-star"></i>)
+        const voteArr = new Array(toFive).fill(<i className="fa-solid fa-star yellow"></i>)
+        const emptyArr = new Array(emptyStars).fill(<i className="fa-regular fa-star"></i>)
         const finalStars = [...voteArr, ...emptyArr]
         return finalStars
 
@@ -23,8 +37,10 @@ export default function HomePage() {
         <>
             {movie && movie.length > 0 && <h1 className="mb-4 search-section">Film</h1>}
 
-            <div className="container-fluid">
-                <div className="row row-cols-6 gap-1">
+            <div className="container-fluid carousel-wrapper">
+                  <button className="indietro" onClick={()=> scrollLeft(filmCarouselRef)}>I</button>
+                <button className="avanti" onClick={() => scrollRight(filmCarouselRef)}>A</button>
+                <div className="row row-cols-6 gap-1" ref={filmCarouselRef}>
                     {movie &&
                         movie.length > 0 &&
                         movie.map((curMovie) => (
@@ -47,8 +63,11 @@ export default function HomePage() {
 
             {series && series.length > 0 && <h1 className="mb-4 search-section">Serie Tv</h1>}
 
-            <div className="container-fluid">
-                <div className="row row-cols-6 gap-1">
+            <div className="container-fluid carousel-wrapper">
+                 <button className="indietro" onClick={()=> scrollLeft(seriesCarouselRef)}>I</button>
+                <button className="avanti" onClick={() => scrollRight(seriesCarouselRef)}>A</button>
+                <div className="row row-cols-6 gap-1" ref={seriesCarouselRef}>
+                   
                     {series &&
                         series.length > 0 &&
                         series.map((curSeries) => (

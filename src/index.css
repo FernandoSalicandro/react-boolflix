@@ -172,6 +172,7 @@ a {
  overflow : scroll;
 }
 
+
 .row::-webkit-scrollbar {
   display: none;
 
@@ -216,6 +217,55 @@ a {
   
 }
 
+.yellow {
+  color: yellow;
+}
+
 .search-section {
   color: white;
+}
+
+.carousel-wrapper {
+  position: relative; 
+}
+
+
+.indietro {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 5%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.indietro:hover {
+  background-color: rgba(255, 255, 255, 0.245);
+  color: black;
+}
+
+.avanti {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 5%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.avanti:hover {
+  background-color: rgba(255, 255, 255, 0.245);
+  color: black;
 }
