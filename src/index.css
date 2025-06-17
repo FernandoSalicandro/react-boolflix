@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Header & Navbar === */
+
+h1 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 54px;
+}
+
+.nav-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.nav-bar img {
+  width: 50px;
+  aspect-ratio: 1;
+}
+
+ul {
+  display: flex;
+  gap: 20px;
+}
+
+li {
+  list-style: none;
+  color: white;
+}
+
+a {
+  color: rgba(255, 255, 255, 0.89);
+  text-decoration: none;
+}
+
+.nav-bar a:hover {
+  cursor: pointer;
+  color: lightgray;
+}
+
+.active {
+  color: white;
+}
+
+
+/* === Jumbo Section === */
+
+.jumbo-img {
+  height: 100vh;
+  padding-top: 54px; /* altezza navbar */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Overlay per leggibilità */
+.jumbo-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  z-index: 0;
+}
+
+.jumbo-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.jumbo-cont {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+
+/* === Jumbo Content === */
+
+.jumbo-img h2 {
+  margin: 0;
+  font-size: 3.5rem;
+  color: white;
+}
+
+.jumbo-img p {
+  font-weight: 600;
+  color: white;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* === Buttons === */
+
+.jumbo-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.jumbo-img button {
+  cursor: pointer;
+  width: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.btn-play {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.btn-play:hover {
+  background-color: rgba(191, 191, 191, 1);
+}
+
+.btn-info {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  background-color: rgba(80, 77, 77, 0.61);
+}
+
+.btn-info:hover {
+  background-color: rgba(80, 77, 77, 0.333);
+}
