@@ -1,8 +1,9 @@
+import 
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'; //Questo mi serve per fare in modo che quando cambia il path (link) parta di nuovo la chiamata API.
 
-export default function JumboPreview() {
+ export default function JumboPreview() {
     const API_KEY = "748a46c34591b7183dcb9350cfbe97fa";
     const [movieInfo, setMovieInfo] = useState(null)
     const location = useLocation() //Questo mi serve per fare in modo che quando cambia il path (link) parta di nuovo la chiamata API.

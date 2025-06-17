@@ -1,6 +1,10 @@
+import { useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 
 export default function Header() {
+
+    const [userSearch, setUserSearch] = useState("");
+    
 
     const navLinks = [
         {
@@ -53,6 +57,17 @@ export default function Header() {
 
                     </div>
 
+                    <form className="d-flex">
+                        <input
+                            className="form-control me-2"
+                            type="text"
+                            placeholder="Cerca"
+                            aria-label="Cerca"
+                            value={userSearch}
+                            onChange={(e)=> setUserSearch(e.target.value)}>
+                            </input>
+                        <button className="btn btn-outline-danger" type="submit">Search</button>
+                    </form>
 
                 </div>
 
