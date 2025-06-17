@@ -5,30 +5,36 @@ import axios from 'axios'
 
 
 export default function HomePage() {
-    const { movie } = useContext(FilmContext)
-    return (
-        <>
-        {movie && movie.length>0 && <h1 className='mb-4'>La Tua Ricerca</h1>}
-            
-            <div className="container-fluid">
-                <div className="row row-cols-6 gap-1">
+  const { movie } = useContext(FilmContext);
 
-                    {movie && movie.length > 0 && movie.map(curMovie => (
+  return (
+    <>
+      {movie && movie.length > 0 && <h1 className="mb-4">La Tua Ricerca</h1>}
 
-                        <div key={curMovie.id} className="card card-body">
-                            <p className="">Titolo Originale : {curMovie.original_title}</p>
-                            <p>Titolo : {curMovie.title}</p>
-                            <p>Lingua : {curMovie.original_language}</p>
-                             <p className="">voto: {curMovie.vote_average}</p>
-
-
-                        </div>
-
-                    ))}
+        <div className="container-fluid">
+        <div className="row row-cols-6 gap-1">
+          {movie &&
+            movie.length > 0 &&
+            movie.map((curMovie) => (
+              <div key={curMovie.id} className="card movie-card">
+                <img
+                  className="img-fluid"
+                  src={`https://image.tmdb.org/t/p/w342${curMovie.poster_path}`}
+                  alt={curMovie.title}
+                />
+                <div className="movie-details">
+                  <p><strong>Titolo Originale:</strong> {curMovie.original_title}</p>
+                  <p><strong>Titolo:</strong> {curMovie.title}</p>
+                  <p><strong>Lingua:</strong> {curMovie.original_language}</p>
+                  <p><strong>Voto:</strong> {curMovie.vote_average}</p>
                 </div>
-            </div>
-        </>
-    )
+              </div>
+            ))}
+        </div>
+      </div>
 
 
+  
+    </>
+  );
 }
