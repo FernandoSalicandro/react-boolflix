@@ -19,12 +19,14 @@ function App() {
   const API_KEY = "748a46c34591b7183dcb9350cfbe97fa";
   
   const [movie, setMovie] = useState([]);
+  const [series,setSeries] = useState([]);
   const [query, setQuery] = useState("")
-  const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+  const searchMovieApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+  const searchSeriesApiUrl = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${query}`
 
   useEffect(() => {
 
-    axios.get(searchApiUrl).then(res => {
+    axios.get(searchMovieApiUrl).then(res => {
 
       console.log(res.data.results);
       setMovie(res.data.results)
@@ -37,10 +39,18 @@ function App() {
 
   }, [query])
 
+  useEffect(()=> {
+
+axios.get(searchSeriesApiUrl).then(res => {
+  setSeries(res.data.results)
+})
+
+  }, [query])
+
   return (
 
     <>
-      <FilmContext.Provider value={{movie, setQuery}}>
+      <FilmContext.Provider value={{movie, series, setQuery}}>
 
         <BrowserRouter>
           <GuestLayout />
