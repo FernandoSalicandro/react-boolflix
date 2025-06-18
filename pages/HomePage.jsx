@@ -1,24 +1,55 @@
 import { useContext, useRef } from 'react'
 import FilmContext from '../Context/FilmContext'
-import Header from '../Components/Header'
-import axios from 'axios'
+import MovieCard from '../Components/MovieCard';
+import SeriesCard from '../Components/SeriesCard';
+
+
+
+
+
 
 
 export default function HomePage() {
     const { movie, series } = useContext(FilmContext);
     const filmCarouselRef = useRef(null);
     const seriesCarouselRef = useRef(null);
-const scrollLeft = (ref) => {
-  if (ref && ref.current) {
-    ref.current.scrollBy({ left: -300, behavior: "smooth" });
-  }
-};
 
-const scrollRight = (ref) => {
-  if (ref && ref.current) {
-    ref.current.scrollBy({ left: 300, behavior: "smooth" });
-  }
-};
+    const getFlagIcon = (lang) => {
+        const langToCountry = {
+            en: 'us',
+            it: 'it',
+            fr: 'fr',
+            de: 'de',
+            ja: 'jp',
+            ko: 'kr',
+            es: 'es',
+            zh: 'cn',
+            ru: 'ru',
+            hi: 'in',
+        };
+
+        const code = langToCountry[lang] || 'un';
+        return <span className={`fi fi-${code}`} style={{ marginRight: '5px' }}></span>;
+    };
+
+
+
+
+
+
+
+
+    const scrollLeft = (ref) => {
+        if (ref && ref.current) {
+            ref.current.scrollBy({ left: -300, behavior: "smooth" });
+        }
+    };
+
+    const scrollRight = (ref) => {
+        if (ref && ref.current) {
+            ref.current.scrollBy({ left: 300, behavior: "smooth" });
+        }
+    };
 
 
     const voteRendering = (film) => {
@@ -38,25 +69,18 @@ const scrollRight = (ref) => {
             {movie && movie.length > 0 && <h1 className="mb-4 search-section">Film</h1>}
 
             <div className="container-fluid carousel-wrapper">
-                  <button className="indietro" onClick={()=> scrollLeft(filmCarouselRef)}>I</button>
-                <button className="avanti" onClick={() => scrollRight(filmCarouselRef)}>A</button>
-                <div className="row row-cols-6 gap-1" ref={filmCarouselRef}>
+                <button className="indietro" onClick={() => scrollLeft(filmCarouselRef)}><i className="fa-solid fa-angle-left"></i></button>
+                <button className="avanti" onClick={() => scrollRight(filmCarouselRef)}><i className="fa-solid fa-angle-right"></i></button>
+                <div className="row row-cols-5 gap-1" ref={filmCarouselRef}>
                     {movie &&
                         movie.length > 0 &&
                         movie.map((curMovie) => (
-                            <div key={curMovie.id} className="card movie-card">
-                                <img
-                                    className="img-fluid"
-                                    src={`https://image.tmdb.org/t/p/w342${curMovie.poster_path}`}
-                                    alt={curMovie.title}
-                                />
-                                <div className="movie-details">
-                                    <p><strong>Titolo Originale:</strong> {curMovie.original_title}</p>
-                                    <p><strong>Titolo:</strong> {curMovie.title}</p>
-                                    <p><strong>Lingua:</strong> {curMovie.original_language}</p>
-                                    <p><strong>Voto:</strong> {voteRendering(curMovie)}</p>
-                                </div>
-                            </div>
+                            <MovieCard
+                                key={curMovie.id}
+                                movie={curMovie}
+                                getFlagIcon={getFlagIcon}
+                                voteRendering={voteRendering}
+                            />
                         ))}
                 </div>
             </div>
@@ -64,26 +88,19 @@ const scrollRight = (ref) => {
             {series && series.length > 0 && <h1 className="mb-4 search-section">Serie Tv</h1>}
 
             <div className="container-fluid carousel-wrapper">
-                 <button className="indietro" onClick={()=> scrollLeft(seriesCarouselRef)}>I</button>
-                <button className="avanti" onClick={() => scrollRight(seriesCarouselRef)}>A</button>
-                <div className="row row-cols-6 gap-1" ref={seriesCarouselRef}>
-                   
+                <button className="indietro" onClick={() => scrollLeft(seriesCarouselRef)}><i className="fa-solid fa-angle-left"></i></button>
+                <button className="avanti" onClick={() => scrollRight(seriesCarouselRef)}><i className="fa-solid fa-angle-right"></i></button>
+                <div className="row row-cols-5 gap-1 h-300" ref={seriesCarouselRef}>
+
                     {series &&
                         series.length > 0 &&
                         series.map((curSeries) => (
-                            <div key={curSeries.id} className="card movie-card">
-                                <img
-                                    className="img-fluid"
-                                    src={`https://image.tmdb.org/t/p/w342${curSeries.poster_path}`}
-                                    alt={curSeries.title}
-                                />
-                                <div className="movie-details">
-                                    <p><strong>Titolo Originale:</strong> {curSeries.original_title}</p>
-                                    <p><strong>Titolo:</strong> {curSeries.title}</p>
-                                    <p><strong>Lingua:</strong> {curSeries.original_language}</p>
-                                    <p><strong>Voto:</strong> {voteRendering(curSeries)}</p>
-                                </div>
-                            </div>
+                            <SeriesCard
+                                key={curSeries.id}
+                                series={curSeries}
+                                getFlagIcon={getFlagIcon}
+                                voteRendering={voteRendering}
+                            />
                         ))}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { Link, NavLink } from "react-router-dom"
 import FilmContext from "../Context/FilmContext";
 
@@ -42,6 +42,7 @@ export default function Header() {
 
         e.preventDefault();
         setQuery(userQuery)
+        
 
     }
     return (
@@ -72,7 +73,7 @@ export default function Header() {
                         <input
                             className="form-control me-2"
                             type="text"
-                            placeholder="Cerca"
+                            placeholder="Cerca film e serie tv"
                             aria-label="Cerca"
                             value={userQuery}
                             onChange={(e) => setUserQuery(e.target.value)}>
@@ -81,7 +82,7 @@ export default function Header() {
                             className="btn btn-outline-danger"
                             type="submit"
                             onClick={search}
-                        >Search
+                        >Cerca
                         </button>
                     </form>
 

@@ -1,3 +1,9 @@
+:root {
+
+  --jumbo-row-height : 500px;
+  --row-carousel-height: 300px
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -27,6 +33,10 @@ h1 {
   align-items: center;
   justify-content: start;
   height: 54px;
+}
+
+.nav-bar::scroll {
+  background-color: rgba(0, 0, 0, 0.26);
 }
 
 .nav-container {
@@ -69,6 +79,27 @@ a {
   color: white;
 }
 
+.nav-bar input::placeholder {
+  color: white;
+}
+
+.nav-bar input {
+  background-color: rgba(255, 255, 255, 0.136);
+  border: white;
+
+}
+
+.nav-bar input:focus {
+  background-color: rgba(255, 255, 255, 0.136);
+  color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+
+
 
 /* === Jumbo Section === */
 
@@ -100,7 +131,7 @@ a {
 }
 
 .jumbo-cont {
-  margin-top: 350px !important;
+  margin-top: calc(var(--jumbo-row-height) - 300px) !important;
   width: 95%;
   max-width: 1440px;
   margin: 0 auto;
@@ -170,7 +201,12 @@ a {
 
  flex-wrap:nowrap;
  overflow : scroll;
+
 }
+
+
+
+
 
 
 .row::-webkit-scrollbar {
@@ -182,18 +218,14 @@ a {
 }
 
 .movie-card {
-  /* display: grid;
-  place-content: center; */
   padding: 0;
   background-color: rgba(255, 255, 255, 0.04);
   color: white;
 }
 
 .card:hover {
+  /* scale: 1.2; */
   cursor:pointer;
-
-
- 
 }
 
 .card:hover img {
