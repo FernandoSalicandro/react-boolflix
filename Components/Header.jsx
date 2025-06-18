@@ -53,7 +53,7 @@ export default function Header() {
                 <div className="nav-container">
 
                     <div className="icon">
-                        <img src="Netflix_icon.svg" alt="" />
+                        <img src="netflix.webp" alt="" />
                     </div>
 
                     <div className="navLinks">

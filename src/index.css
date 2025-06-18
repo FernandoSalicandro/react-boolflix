@@ -1,6 +1,6 @@
 :root {
 
-  --jumbo-row-height : 500px;
+  --jumbo-row-height: 500px;
   --row-carousel-height: 300px
 }
 
@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+
 }
 
 body {
@@ -50,8 +50,7 @@ h1 {
 }
 
 .nav-bar img {
-  width: 50px;
-  aspect-ratio: 1;
+  width: 100px;
 }
 
 ul {
@@ -105,7 +104,8 @@ a {
 
 .jumbo-img {
   height: 100vh;
-  padding-top: 54px; /* altezza navbar */
+  padding-top: 54px;
+  /* altezza navbar */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -197,10 +197,10 @@ a {
   background-color: rgba(80, 77, 77, 0.333);
 }
 
- .row {
+.row {
 
- flex-wrap:nowrap;
- overflow : scroll;
+  flex-wrap: nowrap;
+  overflow: scroll;
 
 }
 
@@ -219,8 +219,9 @@ a {
   position: relative;
   overflow: visible;
 }
+
 .card-body {
-  flex : 1 0 auto;
+  flex: 1 0 auto;
 }
 
 .movie-card {
@@ -233,12 +234,12 @@ a {
 }
 
 .card:hover {
-  
-  cursor:pointer;
+
+  cursor: pointer;
 }
 
 .card:hover img {
-  display:none
+  display: none
 }
 
 .movie-details {
@@ -256,7 +257,8 @@ a {
 }
 
 
-  .movie-more-details-overlay {
+.movie-more-details-overlay {
+
   position: absolute;
   top: 0;
   left: 0;
@@ -267,13 +269,15 @@ a {
   background-color: rgba(20, 20, 20, 0.95);
   color: white;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   overflow-y: auto;
-  display: grid;
-  place-content: center;
   text-align: left;
 }
 
-.movie-more-details-overlay::-webkit-scrollbar{
+.movie-more-details-overlay::-webkit-scrollbar {
 
   display: none;
 }
@@ -287,7 +291,7 @@ a {
 
 .movie-card img {
   height: 100%;
-  
+
 }
 
 .yellow {
@@ -299,7 +303,7 @@ a {
 }
 
 .carousel-wrapper {
-  position: relative; 
+  position: relative;
 }
 
 
@@ -341,4 +345,18 @@ a {
 .avanti:hover {
   background-color: rgba(255, 255, 255, 0.245);
   color: black;
+}
+
+.cast-list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+h3 {
+  color: rgb(220, 53, 69);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

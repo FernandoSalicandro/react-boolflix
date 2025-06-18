@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react'
+import { useContext, useState, useRef } from 'react'
 import FilmContext from '../Context/FilmContext'
 import MovieCard from '../Components/MovieCard';
 import SeriesCard from '../Components/SeriesCard';
@@ -9,10 +9,16 @@ import SeriesCard from '../Components/SeriesCard';
 
 
 
+
 export default function HomePage() {
-    const { movie, series } = useContext(FilmContext);
+    const { movie, series, movieGenres, seriesGenres } = useContext(FilmContext);
     const filmCarouselRef = useRef(null);
     const seriesCarouselRef = useRef(null);
+    const [selectedGenre, setSelectedGenre] = useState(null)
+    const [selectedSeriesGenre, setSelectedSeriesGenre] = useState(null);
+    const [showGenreFilter, setShowGenreFilter] = useState(false);
+    const [showSeriesGenreFilter, setShowSeriesGenreFilter] = useState(false);
+
 
     const getFlagIcon = (lang) => {
         const langToCountry = {
@@ -31,13 +37,6 @@ export default function HomePage() {
         const code = langToCountry[lang] || 'un';
         return <span className={`fi fi-${code}`} style={{ marginRight: '5px' }}></span>;
     };
-
-
-
-
-
-
-
 
     const scrollLeft = (ref) => {
         if (ref && ref.current) {
@@ -66,26 +65,100 @@ export default function HomePage() {
 
     return (
         <>
-            {movie && movie.length > 0 && <h1 className="mb-4 search-section">Film</h1>}
+            {movie && movie.length > 0 && (
+                <>
+                    <h1 className="mb-4 search-section">Film</h1>
+                    <button
+                        className="btn btn-outline-danger"
+                        onClick={() => setShowGenreFilter(!showGenreFilter)}
+                    >Filtra per genere
+                    </button></>)}
+
+            {showGenreFilter && (
+                <select
+                    className='form-select mb-4'
+                    defaultValue={""}
+                    onChange={(e) => setSelectedGenre(e.target.value)}
+                >
+                    <option value="">Tutti I Generi</option>
+                    {Object.entries(movieGenres).map(([id, name]) => (
+
+                        <option key={id} value={id}>{name}</option>
+                    ))}
+
+
+                </select>
+
+
+            )}
+
 
             <div className="container-fluid carousel-wrapper">
-                <button className="indietro" onClick={() => scrollLeft(filmCarouselRef)}><i className="fa-solid fa-angle-left"></i></button>
-                <button className="avanti" onClick={() => scrollRight(filmCarouselRef)}><i className="fa-solid fa-angle-right"></i></button>
+                <button className="indietro" onClick={() => scrollLeft(filmCarouselRef)}>
+                    <i className="fa-solid fa-angle-left"></i>
+                </button>
+                <button className="avanti" onClick={() => scrollRight(filmCarouselRef)}>
+                    <i className="fa-solid fa-angle-right"></i>
+                </button>
+
                 <div className="row row-cols-5 gap-1" ref={filmCarouselRef}>
                     {movie &&
                         movie.length > 0 &&
-                        movie.map((curMovie) => (
-                            <MovieCard
-                                key={curMovie.id}
-                                movie={curMovie}
-                                getFlagIcon={getFlagIcon}
-                                voteRendering={voteRendering}
-                            />
-                        ))}
+                        movie
+                            .filter(curMovie => {
+                                if (!selectedGenre) return true;
+                                return curMovie.genre_ids.includes(parseInt(selectedGenre));
+                            })
+                            .map(curMovie => (
+                                <MovieCard
+                                    key={curMovie.id}
+                                    movie={curMovie}
+                                    getFlagIcon={getFlagIcon}
+                                    voteRendering={voteRendering}
+                                    genresMap={movieGenres}
+                                />
+                            ))}
                 </div>
             </div>
 
-            {series && series.length > 0 && <h1 className="mb-4 search-section">Serie Tv</h1>}
+
+            {series && series.length > 0 && (
+                <>
+                    <h1 className="mb-4 search-section">Serie Tv</h1>
+                    <div className="wrapper d-flex">
+
+
+                        
+                    </div>
+                    <button
+                        className="btn btn-outline-danger"
+                        onClick={() => setShowSeriesGenreFilter(!showSeriesGenreFilter)}
+                    >
+                        Filtra per genere
+                    </button>
+
+                    {showSeriesGenreFilter && (
+                        <select
+                            className="form-select mb-4"
+                            defaultValue={""}
+                            onChange={(e) => setSelectedSeriesGenre(e.target.value)}
+                        >
+                            <option value="">Tutti I Generi</option>
+                            {Object.entries(seriesGenres).map(([id, name]) => (
+                                <option key={id} value={id}>{name}</option>
+                            ))}
+                        </select>
+                    )}
+                </>
+            )}
+
+
+
+
+
+
+
+
 
             <div className="container-fluid carousel-wrapper">
                 <button className="indietro" onClick={() => scrollLeft(seriesCarouselRef)}><i className="fa-solid fa-angle-left"></i></button>
@@ -94,14 +167,21 @@ export default function HomePage() {
 
                     {series &&
                         series.length > 0 &&
-                        series.map((curSeries) => (
-                            <SeriesCard
-                                key={curSeries.id}
-                                series={curSeries}
-                                getFlagIcon={getFlagIcon}
-                                voteRendering={voteRendering}
-                            />
-                        ))}
+                        series
+                            .filter(curSeries => {
+                                if (!selectedSeriesGenre) return true;
+                                return curSeries.genre_ids.includes(parseInt(selectedSeriesGenre));
+                            })
+                            .map((curSeries) => (
+                                <SeriesCard
+                                    key={curSeries.id}
+                                    series={curSeries}
+                                    getFlagIcon={getFlagIcon}
+                                    voteRendering={voteRendering}
+                                    genresMap={seriesGenres}
+                                />
+                            ))}
+
                 </div>
             </div>
 

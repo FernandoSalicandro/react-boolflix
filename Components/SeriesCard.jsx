@@ -1,8 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export default function SeriesCard({ series, getFlagIcon, voteRendering }) {
+export default function SeriesCard({ series, getFlagIcon, voteRendering, genresMap }) {
+  const API_KEY = "748a46c34591b7183dcb9350cfbe97fa";
   const [showMore, setShowMore] = useState(false);
-  const { id, poster_path, title, original_name, name, original_language } = series;
+  const [cast, setCast] = useState([]);
+  const { id, poster_path, title, original_name, name, original_language, genre_ids } = series;
+
+  useEffect(() => {
+    if (showMore) {
+      axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}`)
+        .then(res => {
+          setCast(res.data.cast.slice(0, 5));
+        });
+    }
+  }, [showMore]);
 
   return (
     <div className="card movie-card" style={{ position: "relative" }}>
@@ -26,12 +38,14 @@ export default function SeriesCard({ series, getFlagIcon, voteRendering }) {
 
       {showMore && (
         <div className="movie-more-details-overlay" onClick={() => setShowMore(false)}>
-          <p>
-             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
-            temporibus odit voluptatibus, impedit quaerat, similique
-            necessitatibus architecto eos sed fuga, quibusdam at magni nostrum
-            vitae minima ullam nesciunt laudantium aliquam.
-          </p>
+          <h3>Cast Principale</h3>
+          <ul className="cast-list">
+            {cast.map(curActor => (
+              <li key={curActor.id}>{curActor.name}</li>
+            ))}
+          </ul>
+          <h3>Generi</h3>
+          <p>{genre_ids.map(gen => genresMap[gen]).filter(Boolean).join(', ')}</p>
         </div>
       )}
     </div>

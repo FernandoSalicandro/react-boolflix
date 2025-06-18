@@ -24,13 +24,20 @@ function App() {
   const [movie, setMovie] = useState([]);
   const [series, setSeries] = useState([]);
   const [query, setQuery] = useState("")
+  const [movieGenres, setMovieGenres] = useState({});
+  const [seriesGenres, setSeriesGenres] = useState({});
   const searchMovieApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
   const searchSeriesApiUrl = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${query}`
+  const movieGenresApiUrl =  `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+  const seriesGenresApiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
+
+  
 
   useEffect(() => {
     if (query.trim() !== "") {
 
       axios.get(searchMovieApiUrl).then(res => {
+        console.log(res.data.results)
         setMovie(res.data.results)
       }
       )
@@ -54,10 +61,48 @@ function App() {
 
   }, [query])
 
+    useEffect(() => {
+
+ 
+
+      axios.get(movieGenresApiUrl).then(res => {
+
+        const genresMap = {};
+        res.data.genres.forEach(genre => genresMap[genre.id] = genre.name);
+        setMovieGenres(genresMap)
+        console.log(genresMap)
+      
+      })
+
+    
+
+
+
+  }, [])
+
+      useEffect(() => {
+
+ 
+
+      axios.get(seriesGenresApiUrl).then(res => {
+
+        const genresMap = {};
+        res.data.genres.forEach(genre => genresMap[genre.id] = genre.name);
+        setSeriesGenres(genresMap)
+        console.log(genresMap)
+      
+      })
+
+    
+
+
+
+  }, [])
+
   return (
 
     <>
-      <FilmContext.Provider value={{ movie, series, setQuery }}>
+      <FilmContext.Provider value={{ movie, series, setQuery,movieGenres, seriesGenres }}>
 
         <BrowserRouter>
           <GuestLayout />
